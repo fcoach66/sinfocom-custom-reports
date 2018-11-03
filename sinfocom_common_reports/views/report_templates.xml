@@ -6,23 +6,23 @@
 	<xpath expr="//div[hasclass('header')]" position="replace">
 		<div class="header">
         	    <div class="row">
-        	        <div class="col-xs-3 mb4">
-        	            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 192px;"/>
-        	        </div>
-        	        <div class="col-xs-6">
-        	        </div>
-        	        <div class="col-xs-3 mt48" style="line-height: .8em;">
+					<div class="col-xs-3 mb4">
+						<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 192px;"/>
+					</div>
+					<div class="col-xs-6">
+					</div>
+					<div class="col-xs-3 mt48" style="line-height: .8em;">
         	          <p><em><strong><span style="font-size:15px" t-field="company.name"/></strong><br/>
         	          <span style="font-size:11px" t-field="company.street"/><br/>
         	          <span style="font-size:11px" t-field="company.zip"/> <span style="font-size:11px" t-field="company.city"/><br/>
         	          <span style="font-size:11px">Tel: </span><span style="font-size:11px" t-field="company.phone"/><span style="font-size:11px"> - Fax: </span><span style="font-size:11px" t-field="company.partner_id.fax"/><br/>
         	          <span style="font-size:11px">P. IVA: </span><span style="font-size:11px" t-field="company.vat"/>
         	          </em></p>
-        	        </div>
+					</div>
         	    </div>
-        	</div>
+        </div>
 	</xpath>
-
+	
 </template>
 
 <template id="external_layout_footer_sinfocom" inherit_id="report.external_layout_footer">
