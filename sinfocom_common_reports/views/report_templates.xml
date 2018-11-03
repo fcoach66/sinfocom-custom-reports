@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="external_layout_header_sinfocom" inherit_id="report.external_layout_header">
+
+	<xpath expr="//div[hasclass('header')]" position="replace">
+		<div class="header">
+        	    <div class="row">
+        	        <div class="col-xs-3 mb4">
+        	            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 192px;"/>
+        	        </div>
+        	        <div class="col-xs-6">
+        	        </div>
+        	        <div class="col-xs-3 mt48" style="line-height: .8em;">
+        	          <p><em><strong><span style="font-size:15px" t-field="company.name"/></strong><br/>
+        	          <span style="font-size:11px" t-field="company.street"/><br/>
+        	          <span style="font-size:11px" t-field="company.zip"/> <span style="font-size:11px" t-field="company.city"/><br/>
+        	          <span style="font-size:11px">Tel: </span><span style="font-size:11px" t-field="company.phone"/><span style="font-size:11px"> - Fax: </span><span style="font-size:11px" t-field="company.partner_id.fax"/><br/>
+        	          <span style="font-size:11px">P. IVA: </span><span style="font-size:11px" t-field="company.vat"/>
+        	          </em></p>
+        	        </div>
+        	    </div>
+        	</div>
+	</xpath>
+
+</template>
+
+<template id="external_layout_footer_sinfocom" inherit_id="report.external_layout_footer">
+
+	<xpath expr="//div[hasclass('footer')]" position="replace">
+    	<div class="footer">
+            <div class="row" style="border-top: 1px solid black;">
+        	        <div class="col-xs-3" style="line-height: .9em;">
+        	          <p><em><strong><span style="font-size:14px" t-field="company.name"/></strong><br/>
+        	          <span style="font-size:11px" t-field="company.street"/><br/>
+        	          <span style="font-size:11px" t-field="company.zip"/> <span style="font-size:11px" t-field="company.city"/><br/>
+        	          <span style="font-size:11px">Tel: </span><span style="font-size:11px" t-field="company.phone"/><span style="font-size:11px"> - Fax: </span><span style="font-size:11px" t-field="company.partner_id.fax"/><br/>
+        	          <span style="font-size:11px">Email: </span><span style="font-size:11px" t-field="company.email"/><br/>
+        	          <span style="font-size:11px">Web: </span><span style="font-size:11px" t-field="company.website"/><br/>
+        	          <span style="font-size:11px">P. IVA: </span><span style="font-size:11px" t-field="company.vat"/>
+        	          </em></p>
+        	        </div>
+                  <div class="col-xs-7">
+                  </div>
+                  
+                  <div class="col-xs-2">
+                    Pagina <span class="page"/> di <span class="topage"/>
+                </div>
+            </div>
+        </div>
+	</xpath>
+
+</template>
+
+</odoo>
+
