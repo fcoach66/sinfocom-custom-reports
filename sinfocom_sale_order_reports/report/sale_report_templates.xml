@@ -2,14 +2,14 @@
 <odoo>
 <template id="report_saleorder_document_sinfocom" inherit_id="sale.report_saleorder_document">
 
-	<xpath expr="//div[@class='page']" position="replace">
+<xpath expr="//div[@class='page']" position="replace">
 
 		<div class="page">
             <div class="oe_structure"/>
-            <p style="text-align:right"><span t-field="doc.name"></span> - Pagina <span class="page"/> di <span class="topage"/></p>
-            <p style="text-align:left">Ns. Rif. <span t-field="doc.name"></span></p>
-            <br></br>
-            <p style="text-align:left">Perugia, <span t-field="doc.date_order" t-field-options="{'format': 'dd/MM/yyyy'}"></span></p>
+            <p style="text-align:right"><span t-field="doc.name"/> - Pagina <span class="page"/> di <span class="topage"/></p>
+            <p style="text-align:left">Ns. Rif. <span t-field="doc.name"/></p>
+            <br/>
+            <p style="text-align:left">Perugia, <span t-field="doc.date_order" t-field-options="{'format': 'dd/MM/yyyy'}"/></p>
             <div class="row">
                 <div class="col-xs-6">
                 </div>
@@ -18,42 +18,15 @@
                 </div>
             </div>
 
-            <br></br>
-            <br></br>
+            <br/>
+            <br/>
             <strong>
             <p style="text-align:left">Oggetto: <span t-esc="doc.additional_text_1 or 'Proposta commerciale'"/></p>
             </strong>
-            <br></br>
-            <br></br>
-            <t t-if="doc.additional_text_2"><p style="text-align:left"><span t-field="doc.additional_text_2"></span></p><br></br><br></br></t>
-<!--
-            <div class="row mt32 mb32" id="informations">
-                <div t-if="doc.client_order_ref" class="col-xs-3">
-                    <strong>Your Reference:</strong>
-                    <p t-field="doc.client_order_ref"/>
-                </div>
-                <div t-if="doc.confirmation_date and doc.state not in ['draft','sent']" class="col-xs-3">
-                    <strong>Date Ordered:</strong>
-                    <p t-field="doc.confirmation_date"/>
-                </div>
-                <div t-if="doc.date_order and doc.state in ['draft','sent']" class="col-xs-3">
-                    <strong>Quotation Date:</strong>
-                    <p t-field="doc.date_order"/>
-                </div>
-                <div t-if="doc.user_id.name" class="col-xs-3">
-                    <strong>Salesperson:</strong>
-                    <p t-field="doc.user_id"/>
-                </div>
-                <div name="payment_term" t-if="doc.payment_term_id" class="col-xs-3">
-                    <strong>Payment Terms:</strong>
-                    <p t-field="doc.payment_term_id"/>
-                </div>
-                <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col-xs-3">
-                    <strong>Expiration Date:</strong>
-                    <p t-field="doc.validity_date"/>
-                </div>
-            </div>
--->
+            <br/>
+            <br/>
+            <t t-if="doc.additional_text_2"><p style="text-align:left"><span t-field="doc.additional_text_2"/></p><br/><br/></t>
+
             <!-- Is there a discount on at least one line? -->
             <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
 
@@ -131,51 +104,38 @@
 
             <div class="clearfix">
                 <div class="row" name="total">
-                    <div class="col-xs-4 pull-right">
-                        <table class="table table-condensed" style="min-width: 200px;max-width: 350px;">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Totale preventivo IVA esclusa: </strong></td>
+                            <td class="text-right">
+                                <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
                             <tr>
-                                <td><strong>Totale preventivo IVA esclusa</strong></td>
+                                <td><span t-esc="amount_by_group[0] or 'IVA'"/></td>
                                 <td class="text-right">
-                                    <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                    <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
                                 </td>
                             </tr>
-                            <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
-                                <tr>
-                                    <t t-if="amount_by_group[3] == 1 and doc.amount_untaxed == amount_by_group[2]">
-                                        <td>
-                                            <span t-esc="amount_by_group[0]"/>
-                                            <span>&amp;nbsp;<span>su</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/></span>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
-                                        </td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>
-                                            <span t-esc="amount_by_group[0]"/>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
-                                        </td>
-                                    </t>
-                                </tr>
-                            </t>
-                            <tr>
-                                <td><strong>Totale preventivo IVA compresa</strong></td>
-                                <td class="text-right">
-                                    <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                        </t>
+                        <tr class="border-black">
+                            <td><strong>Totale preventivo IVA compresa: </strong></td>
+                            <td class="text-right">
+                                <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+            </div>
 
-            <t t-if="doc.additional_text_3"><p style="text-align:left"><span t-field="doc.additional_text_3"></span></p><br></br><br></br></t>
+            <t t-if="doc.additional_text_3"><p style="text-align:left"><span t-field="doc.additional_text_3"/></p><br/><br/></t>
 
             <strong><p>Termini e condizioni di vendita</p></strong>
-            <p>Pagamento: <span t-field="doc.payment_term_id"></span></p>
-            <p>Validità offerta: fino al <span t-field="doc.validity_date"></span> </p>
+            <p>Pagamento: <span t-field="doc.payment_term_id"/></p>
+            <p>Validità offerta: fino al <span t-field="doc.validity_date"/> </p>
             
             <p t-field="doc.note"/>
             <p t-if="doc.payment_term_id.note">
@@ -211,7 +171,6 @@
         </div>
 
 	</xpath>
-
 </template>
 
 </odoo>
